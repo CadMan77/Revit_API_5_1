@@ -1,0 +1,15 @@
+﻿<Window x:Class="Revit_API_5_1.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Revit_API_5_1"
+             mc:Ignorable="d" 
+             Height="200" Width="250"
+             Title="Статистика по проекту">
+    <StackPanel HorizontalAlignment="Center">        
+        <Button Content="1 (количество труб)" Width="Auto" Margin="15" Padding="3" Command="{Binding ShowPipeQtyCommand}"/>
+        <Button Content="2 (объем стен, м^3)" Width="Auto" Margin="15" Padding="3" Command="{Binding ShowWallTotVlmCommand}"/>
+        <Button Content="3 (количество дверей)" Width="Auto" Margin="15" Padding="3" Command="{Binding ShowDoorQtyCommand}"/>
+    </StackPanel>
+</Window>

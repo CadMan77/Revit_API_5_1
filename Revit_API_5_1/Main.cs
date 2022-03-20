@@ -20,35 +20,11 @@ namespace Revit_API_5_1
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            UIApplication uiapp = commandData.Application;
-            UIDocument uidoc = uiapp.ActiveUIDocument;
-            Document doc = uidoc.Document;
 
-            int pipeQty = new FilteredElementCollector(doc)
-                .OfCategory(BuiltInCategory.OST_PipeCurves)
-                .WhereElementIsNotElementType()
-                .GetElementCount();
+            //TaskDialog.Show("Результат", $"Трубы = {pipeQty}{Environment.NewLine}Стены = {wallVolumeTotal}{Environment.NewLine}Двери = {doorQty}");
 
-            List<Wall> walls = new FilteredElementCollector(doc)
-                .OfCategory(BuiltInCategory.OST_Walls)
-                .WhereElementIsNotElementType()
-                .Cast<Wall>()
-                .ToList();
-
-            double wallVolumeTotal = 0.0;
-
-            foreach (var wall in walls)
-            {
-                wallVolumeTotal += UnitUtils.ConvertFromInternalUnits(wall.get_Parameter(BuiltInParameter.HOST_VOLUME_COMPUTED).AsDouble(), UnitTypeId.CubicMeters);
-            }
-
-            int doorQty = new FilteredElementCollector(doc)
-                .OfCategory(BuiltInCategory.OST_Doors)
-                .WhereElementIsNotElementType()
-                .GetElementCount();
-
-            TaskDialog.Show("Результат", $"Трубы = {pipeQty.ToString()}{Environment.NewLine}Стены = {wallVolumeTotal.ToString()}{Environment.NewLine}Двери = {doorQty.ToString()}");
-
+            var window = new MainView(commandData);
+            window.ShowDialog();
             return Result.Succeeded;
         }
     }
