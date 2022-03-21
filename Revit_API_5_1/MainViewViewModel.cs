@@ -12,6 +12,10 @@ namespace Revit_API_5_1
 
         private static ExternalCommandData _commandData;
 
+        private static UIApplication _uiapp;
+        private static UIDocument _uidoc;
+        private static Document _doc;
+
         public DelegateCommand ShowPipeQtyCommand { get; }
         public DelegateCommand ShowWallTotVlmCommand { get; }
         public DelegateCommand ShowDoorQtyCommand { get; }
@@ -19,10 +23,9 @@ namespace Revit_API_5_1
         public MainViewViewModel(ExternalCommandData commandData)
         {
             _commandData = commandData;
-
-            //private static UIApplication uiapp = _commandData.Application;
-            //private static UIDocument uidoc = uiapp.ActiveUIDocument;
-            //private static Document doc = uidoc.Document;
+            _uiapp = _commandData.Application;
+            _uidoc = _uiapp.ActiveUIDocument;
+            _doc = _uidoc.Document;
 
             ShowPipeQtyCommand = new DelegateCommand(OnShowPipeQtyCommand);
             ShowWallTotVlmCommand = new DelegateCommand(OnShowWallTotVlmCommand);
@@ -40,13 +43,8 @@ namespace Revit_API_5_1
         {
             RaiseCloseRequest(); // ???
 
-            //UIApplication uiapp = _commandData.Application;
-            //UIDocument uidoc = uiapp.ActiveUIDocument;
-            //Document doc = uidoc.Document;
-            //int pipeQty = new FilteredElementCollector(doc)
-
-            int pipeQty = new FilteredElementCollector(_commandData.Application.ActiveUIDocument.Document)
-
+            //int pipeQty = new FilteredElementCollector(_commandData.Application.ActiveUIDocument.Document)
+            int pipeQty = new FilteredElementCollector(_doc)
                 .OfCategory(BuiltInCategory.OST_PipeCurves)
                 .WhereElementIsNotElementType()
                 .GetElementCount();
@@ -58,13 +56,8 @@ namespace Revit_API_5_1
         {
             RaiseCloseRequest(); // ???
 
-            //UIApplication uiapp = _commandData.Application;
-            //UIDocument uidoc = uiapp.ActiveUIDocument;
-            //Document doc = uidoc.Document;
-            //List<Wall> walls = new FilteredElementCollector(doc)
-
-            List<Wall> walls = new FilteredElementCollector(_commandData.Application.ActiveUIDocument.Document)
-
+            //List<Wall> walls = new FilteredElementCollector(_commandData.Application.ActiveUIDocument.Document)
+            List<Wall> walls = new FilteredElementCollector(_doc)
                 .OfCategory(BuiltInCategory.OST_Walls)
                 .WhereElementIsNotElementType()
                 .Cast<Wall>()
@@ -84,13 +77,8 @@ namespace Revit_API_5_1
         {
             RaiseCloseRequest(); // ???
 
-            //UIApplication uiapp = _commandData.Application;
-            //UIDocument uidoc = uiapp.ActiveUIDocument;
-            //Document doc = uidoc.Document;
-            //int doorQty = new FilteredElementCollector(doc)
-
-            int doorQty = new FilteredElementCollector(_commandData.Application.ActiveUIDocument.Document)
-
+            //int doorQty = new FilteredElementCollector(_commandData.Application.ActiveUIDocument.Document)
+            int doorQty = new FilteredElementCollector(_doc)
                 .OfCategory(BuiltInCategory.OST_Doors)
                 .WhereElementIsNotElementType()
                 .GetElementCount();
