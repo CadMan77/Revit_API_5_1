@@ -32,16 +32,31 @@ namespace Revit_API_5_1
             ShowDoorQtyCommand = new DelegateCommand(OnShowDoorQtyCommand);
         }
 
-        public event EventHandler CloseRequest;
+        //public event EventHandler CloseRequest;
 
-        private void RaiseCloseRequest()
+        //private void RaiseCloseRequest()
+        //{
+        //    CloseRequest?.Invoke(this, EventArgs.Empty);
+        //}
+
+        public event EventHandler HideRequest;
+
+        private void RaiseHideRequest()
         {
-            CloseRequest?.Invoke(this, EventArgs.Empty);
+            HideRequest?.Invoke(this, EventArgs.Empty);
+        }
+
+        public event EventHandler ShowRequest;
+
+        private void RaiseShowRequest()
+        {
+            ShowRequest?.Invoke(this, EventArgs.Empty);
         }
 
         private void OnShowPipeQtyCommand()
         {
-            RaiseCloseRequest(); // ???
+            //RaiseCloseRequest(); // ???
+            RaiseHideRequest(); // ???
 
             //int pipeQty = new FilteredElementCollector(_commandData.Application.ActiveUIDocument.Document)
             int pipeQty = new FilteredElementCollector(_doc)
@@ -50,11 +65,14 @@ namespace Revit_API_5_1
                 .GetElementCount();
 
             TaskDialog.Show("Трубы, шт:", $"{pipeQty}");
+
+            RaiseShowRequest();
         }
 
         private void OnShowWallTotVlmCommand()
         {
-            RaiseCloseRequest(); // ???
+            //RaiseCloseRequest(); // ???
+            RaiseHideRequest(); // ???
 
             //List<Wall> walls = new FilteredElementCollector(_commandData.Application.ActiveUIDocument.Document)
             List<Wall> walls = new FilteredElementCollector(_doc)
@@ -71,11 +89,14 @@ namespace Revit_API_5_1
             }
 
             TaskDialog.Show("Стены, м^3:", $"{wallVolumeTotal}");
+
+            RaiseShowRequest();
         }
 
         private void OnShowDoorQtyCommand()
         {
-            RaiseCloseRequest(); // ???
+            //RaiseCloseRequest(); // ???
+            RaiseHideRequest(); // ???
 
             //int doorQty = new FilteredElementCollector(_commandData.Application.ActiveUIDocument.Document)
             int doorQty = new FilteredElementCollector(_doc)
@@ -84,6 +105,8 @@ namespace Revit_API_5_1
                 .GetElementCount();
 
             TaskDialog.Show("Двери, шт:", $"{doorQty}");
+
+            RaiseShowRequest();
         }
     }
 }
