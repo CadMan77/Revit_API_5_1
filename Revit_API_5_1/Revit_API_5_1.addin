@@ -5,6 +5,6 @@
 		<AddInId>ABD2D10C-54FB-425D-AAC3-A03BCC9E0612</AddInId>
 		<FullClassName>Revit_API_5_1.Main</FullClassName>
 		<VendorId>ADSK</VendorId>
-		<Text>RevitAPI 5-1 Создание кнопок</Text>
+		<Text>RevitAPI 5-1 Создание окнонного приложения с кнопоками</Text>
 	</AddIn>
 </RevitAddIns>
